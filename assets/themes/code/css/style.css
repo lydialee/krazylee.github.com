@@ -18,6 +18,8 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
 }
+::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
+::selection { background:#FF5E99; color:#fff; text-shadow: none; }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -47,7 +49,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
+a{
+-webkit-transition: color .8s ease, background .8s ease, opacity .8s ease;
+  -moz-transition: color .8s ease, background .8s ease, opacity .8s ease;
+  transition: color .8s ease, background .8s ease, opacity .8s ease;
+}
 
 /*
  * Webfonts
