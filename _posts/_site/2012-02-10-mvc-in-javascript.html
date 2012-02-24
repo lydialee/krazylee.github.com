@@ -1,0 +1,21 @@
+<h2 id='background'>Background</h2>
+
+<p>一个Javascript web application的业务逻辑大致分这么几个部分：</p>
+
+<ul>
+<li>从remote server上获取数据</li>
+
+<li>事件和页面DOM的绑定</li>
+
+<li>从页面元素变化的自动渲染render</li>
+
+<li>routes路由变化的监控</li>
+</ul>
+
+<p>当数据模型较少且单一的情况下，客户端的代码可以比较轻松的解决这几个目的。 而当数据模型较多,且页面结构复杂的时候，客户端代码则需要遵循一定的表现层模式(<a href='http://www.infoq.com/cn/articles/rationalizing-presentation-tier'>presentation patterns</a>). 其目的就是各部分代码逻辑的解藕，表现形式就是类似models,controllers,views,routes的目录结构的划分.</p>
+
+<h2 id='concepts'>Concepts</h2>
+
+<p>更准确的说应该是MVVM(Model-View-ViewModel)才对。 因为严格说来并没有controller的存在，反倒更多的是routes的设置。 这也是为什么backbone在后来的版本中把Controller的名字改成了Route的原因。</p>
+
+<h3 id='to_be_continued'>to be continued&#8230;</h3>

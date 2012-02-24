@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>learn you a javascript</title>
+	
+	<meta name="description" content="A basic introduction about javascript">
+	<meta name="author" content="Krazy Lee">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="../themes/style/neon.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides -->
+<section class="slide" id="title-slide">
+	<h1>learn you a javascript</h1>
+</section>
+
+<section class="slide" id="background">
+	<h2>Background</h2>
+	<p>Javascript由网景和Sun两家公司一起携手推向市场. 必须”看上去与Java足够相似”.</p>
+	<ol>
+		<li>
+			<h4>Make it easy to copy/paste snippets of code</h4>
+		</li>
+		<li>
+			<h4>Tolerate “minor” errors (missing semicolons)</h4>
+		</li>
+		<li>
+			<h4>Simplified onclick, onmousedown</h4>
+		</li>
+		<li>
+			<h4>Pick a few hard-working, powerful primitives</h4>
+		</li>
+		<li>
+			<h4>First class functions for procedural abstraction</h4>
+		</li>
+		<li>
+			<h4>Objects everywhere, prototype-based(object based)</h4>
+		</li>
+		<li>
+			<h4>Leave all else out!</h4>
+		</li>
+	</ol>
+	<strong>But...</strong>
+</section>
+<section id="blockquote" class="slide">
+	<h2>Brendan Eich said:</h2>
+	<img src="../themes/images/Brendan Eich.jpg" alt="" />
+	<blockquote>Don’t let Marketing name your language.</blockquote>
+
+</section>
+<section id="varible" class="slide">
+	<h1>Varible</h1>
+</section>
+<section id="varible-define" class="slide">
+	<h2>How to define an varible</h2>
+	<pre><code>
+	var a = 10; 
+	var b = "a quick fox jumps over the lazy dog"; 
+	var c = true; 
+	</code></pre>
+</section>
+<section class="slide" id="data-type">
+	<h2>data type(5):</h2>
+	<h4>Only five primitive types are not objects: (object-like,the java way):</h4>
+    	<ol id="types">
+		<li><h4>Number</h4></li>
+		<li><h4>String</h4></li>
+		<li><h4>Boolean</h4></li>
+		<li><h4>undefined</h4></li>
+		<li><h4>null</h4></li>	
+    	</ol>   
+</section>
+<section class="slide" id="5">
+	<img src="../themes/images/5.jpg"/>
+</section>
+<section class="slide" id="number">
+	<h2>number:</h2>   
+	<pre><code>
+	var a = 10; 
+	var b = 1e3; 
+	var c = NaN; 
+	typeof c == "number"; => true
+	</code></pre>
+</section>
+<section class="slide" id="string">
+	<h2>string:</h2>
+	<pre><code>
+	var one = “first”; 
+	var two = “second”; 
+	var three = one + two; => “firstsecond”
+	</code></pre>
+</section>
+<section class="slide" id="boolean">
+	<h2>boolean:</h2>
+	<pre><code>
+	== //判断前, 类型转换 
+	=== 值与类型均相同
+	"3" == 3  
+	"3" !== 3
+	</code></pre>
+</section>
+<section class="slide" id="null">
+	<h2>undefined & null:</h2>
+	<pre><code>
+ 	var o = {}; 
+	o.nonExist; => undefined
+	</code></pre>
+</section>
+<section class="slide" id="convertion">
+	<h2>data convertion:</h2>
+	<pre><code>
+	parseInt(“123abc”) parseFloat(“0.5aaa”) !!”numberOne” 3 + ””
+	</code></pre>
+</section>
+<section class="slide" id="variable-wrapup">
+	<h2>variable wrap-up:</h2>
+	<h4>a few primitive types,everything else is an object</h4>
+	<ol id="types">
+		<li><h4>Number</h4></li>
+		<li><h4>String</h4></li>
+		<li><h4>Boolean</h4></li>
+		<li><h4>undefined</h4></li>
+		<li><h4>null</h4></li>	
+    	</ol> 	
+</section>
+<section class="slide" id="example1">
+	<h2>example A:a simple calulator</h2>
+	<ol>
+		<li>
+			<h4>简单的DOM操作</h4>
+			<p>DOM(Document Object Model):The DOM is basically an object oriented representation of our document. Every element in our HTML document is represented by an object in that document's DOM tree. </p>
+		</li>
+		<li>
+			<h4>类型转换</h4>
+			<p></p>		
+		</li>
+		<li>
+			<h4>js的浮点计算bug</h4>
+			<p></p>
+		</li>
+	</ol>
+</section>
+<section id="func" class="slide">
+	<h1>Function</h1>
+</section>
+<section class="slide" id="function">
+	<h2>Function(first-class object):</h2>
+	<h4>invokable objects</h4>
+	<section id="function-defineA" class="slide">
+		<h2>How to define a function(1)</h2>
+		<ul>
+		<li id="option1">
+		<h4>option 1</h4>		
+		<pre><code>
+var add = new Function("a","b","return (a+b)");
+		</code></pre>
+		<p>Function对象的一个实例</p>
+		</li>
+		</ol>	
+	</section>
+</section>
+<section id="function-defineB" class="slide">
+		<h2>How to define a function(2)</h2>
+		<ul>		
+		<li id="option2">
+		<h4>option 2</h4>		
+		<pre><code>
+		function add(a,b){
+		    return a + b;
+		} 
+		</code></pre>
+		<p>option1 的语法糖，提供函数字面量</p>
+		</li>
+		<li id="option3">
+		<h4>option 3</h4>		
+		<pre><code>
+		var add = function(a,b){
+		    return a + b;
+		};
+		</code></pre>
+		
+		</li>
+		</ol>	
+</section>
+<section class="slide" id="arguments">
+	<h2>arguments</h2>
+	<p>伪数组Array.prototype.slice.call(argments,0)<p>
+	<pre><code>
+function addArguments(){
+   var sum = 0;	
+   for(var i = 0,l=arguments.length; i&lt;l;i++){
+	sum += arguments[i];
+   }
+   return sum;
+}
+addArguments(20,30)  =&gt; 50
+
+
+	</code></pre>
+</section>
+<section id="new" class="slide">
+	<h2>new</h2>
+	<p class="slide">
+	   执行new时，相当与
+	<pre><code>
+var o ={};
+constructor.apply(o);
+o.__proto__ = employee.prototype;
+	</code></pre>
+	</p>	
+</section>
+<section id="scope" class="slide">
+	<h1>Scope（lexical function scope）</h1>
+</section>
+<section class="slide" id="global">
+	<h2>全局变量：</h2>
+	<ol>
+	  <li><h4>最外层函数和在最外层函数外面定义的变量拥有全局作用域</h4></li>
+	  <li><h4>不用var直接赋值的变量自动声明为拥有全局作用域</h4></li>
+	  <li><h4>所有window对象的属性拥有全局作用域</h4></li>	  
+	</ol>
+	<section class="slide" id="private">
+		<h2>私有变量：</h2>
+		<h4>函数作用域</h4>
+	</section>
+</section>
+<section class="slide" id="closure">
+	<h2>closure闭包</h2>
+	<p>访问私有变量</p>
+	<ol>
+	 	<li><h4>读取函数内部的变量</h4></li>
+		<li><h4>让这些变量的值始终保持在内存中</h4></li>
+	</ol>
+</section>
+<section class="slide" id="invoke">
+	<h2>函数的调用</h2>
+	<pre></code>
+a.increment.call(b,1);
+a.increment.apply(b,[1]);
+	</code></pre>
+	<p>difference:call接受一个参数，apply接受一个参数数组</p>
+</section>
+<section class="slide" id="scope-chain">
+	<h2>scope-chain：</h2>
+</section>
+<section class="slide" id="function wrapup">
+	<h2>function wrap-up:</h2>
+	<h4>function也是对象，但是可以调用</h4>
+	<ol id="functions">
+		<li><h4>Number</h4></li>
+		<li><h4>String</h4></li>
+		<li><h4>Boolean</h4></li>
+		<li><h4>undefined</h4></li>
+		<li><h4>null</h4></li>	
+    	</ol> 	
+</section>
+<section class="slide" id="example2">
+	<h2>example B:a simple tab</h2>
+	<ol>
+		<li>
+			<h4>简单的DOM操作</h4>
+			<p></p>
+		</li>
+		<li>
+			<h4>类型转换</h4>
+			<p></p>		
+		</li>
+		<li>
+			<h4>js的浮点计算bug</h4>
+			<p></p>
+		</li>
+	</ol>
+</section>
+<section class="slide" id="object">
+	<h1>Object</h1>
+</section>
+<section id="this" class="slide">
+	<h2>this</h2>	
+	<p>this指向调用函数的那个对象</p>
+	<strong>this的指向是由它所在函数调用的上下文决定的，而不是由它所在函数定义的上下文决定的。</strong>
+</section>
+<section class="slide" id="no-object">
+	<img src="../themes/images/object.jpg"/>
+	<blockquote class="slide">在javascript中很容易找到对象,无处不在</blockquote>
+	<h4 class="slide">so...</h4>
+	<h2 class="slide">where?</h2>
+	<h2 class="slide">how?</h2>
+</section>
+<section class="slide" id="why-not-all">
+	<h2>为什么不都是对象<h2>
+	<p class="slide">"should be like java".....</p>	
+	<section class="slide">
+	<img src="../themes/images/wrong.jpg"/>
+	</section>
+</section>
+<section class="slide" id="objects">
+	<h2>Two main types of objects:</h2>
+	<ol>
+		<li>
+			<h4>Native:Described in the ECMAScript standard</h4>
+			<ol>
+				<li>built-in : Array, Date</li>
+				<li>user-defined: var o = {};</li>
+			</ol>		
+		</li>
+		
+		<li>
+			<h4>Host:Defined by the host environment</h4>
+			<ol>
+			<li>the browser</li>
+			<li>node(nodejs is an implemention of commonJS)</li>
+			</ol>	
+		</li>
+	</ol>    
+</section>
+<section class="slide" id="objects">
+	<h2>the key can be any type</h2>
+	<pre><code>
+var myObj =  Object;
+myObj['myProperty'] = 454;
+myObj[23432] = true;
+myObj[true] = 'hello'
+	</code></pre>
+	<h2>this works on any object</h2>
+	<pre><code>
+var now = new Date;
+now[5] = 'hello!';
+	</code></pre>
+</section>
+<section class="slide" id="inspect">
+	<h2>Inspecting objects:</h2>
+	<pre><code>
+var person = {
+	name: "Bob",
+	email: "bob@bob.com",
+	tel: "234234234"
+};
+for(var key in person){
+	console.log(key);
+}
+if("tel" in person){
+	alert(person.tel);
+}
+	</code></pre>
+</section>
+<section class="slide" id="a-complex-object">
+	<h2>a-complex-object</h2>
+	<p>Methods are just functions that are assigned to a 
+property of an object.</p>
+	<pre><code>
+var a = {counter : 5};
+var b = {counter : 10};
+a.increment = function(amount){
+	this.counter += amount;
+}
+a.increment(1)
+a.counter;
+b.increment = a.increment;
+b.increment(1);
+console.log(b.counter);
+	</pre></code>
+</section>
+<section class="slide" id="inhersitance">
+	<h2>inhersitance</h2>
+	<ol>
+		<li><h4>classical</h4></li>
+		<li><h4>prototypal</h4></li>
+	</ol>
+</section>
+<section class="slide" id="slideshow">
+	<h2>example 3: a slideshow</h2>
+	<pre><code>	
+ var slideshow = {
+   init:function(){
+      this.start();
+   },
+   start:function(){
+
+   }
+}
+</code></pre>
+</section>
+<section class="slide" id="end">
+	<h1>that's all,thx</h1>
+</section>
+
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+
+<!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../jquery-1.7.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+
+<!-- Initialize the deck -->
+<script>
+$(function() {
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>
