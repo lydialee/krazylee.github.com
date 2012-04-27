@@ -178,14 +178,14 @@ header {
 h1 a,
 h2 a, 
 article .tags a {
-  color: #dc322f;
+  color: #657b83;
   text-decoration: none;
 }
 
   h1 a:hover,
   h2 a:hover, 
   article .tags a:hover {
-    color: #657b83;
+    color: #dc322f;
     text-decoration: none;
   }
 

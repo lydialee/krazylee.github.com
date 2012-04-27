@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>flash[:notice]</title>
+ <link href="http://krazylee.github.com/atom.xml" rel="self"/>
+ <link href="http://krazylee.github.com"/>
+ <updated>2012-04-27T13:54:16+08:00</updated>
+ <id>http://krazylee.github.com</id>
+ <author>
+   <name>Krazy Lee</name>
+   <email>lixiangstar@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>Metaprogramming ruby</title>
+   <link href="http://krazylee.github.com/2012/04/27/metaprogramming-ruby"/>
+   <updated>2012-04-27T00:00:00+08:00</updated>
+   <id>hhttp://krazylee.github.com/2012/04/27/metaprogramming-ruby</id>
+   <content type="html">&lt;h1 id='object_model'&gt;Object model&lt;/h1&gt;
+
+&lt;h2 id='open_class'&gt;Open Class&lt;/h2&gt;
+
+&lt;p&gt;class关键字可以看作成一个作用域操作符而不是类的声明。 用class打开一个作用域。&lt;/p&gt;
+
+&lt;h2 id='monkey_see_monkey_patch'&gt;Monkey See, Monkey Patch&lt;/h2&gt;
+
+&lt;p&gt;if you casually add bits and pieces of functionality to classes, you can end up with bugs like the one you just encountered. Some people would frown upon this kind of reckless patching of classes, and they would refer to the previous code with a derogatory name: they’d call it a Monkeypatch.&lt;/p&gt;
+
+&lt;h2 id='class_and_objects'&gt;class and objects&lt;/h2&gt;
+
+&lt;p&gt;Instance variables live in objects, and methods live in classes. 实例变量在对象中，而方法共享在类里。 String.instance_methods == &amp;#8220;abc&amp;#8221;.methods # =&amp;gt; true String.methods == &amp;#8220;abc&amp;#8221;.methods # =&amp;gt; false&lt;/p&gt;
+
+&lt;p&gt;classes are nothing but objects, class names are nothing but constants. 类也是对象，类名则是一些常数值。&lt;/p&gt;
+
+&lt;p&gt;Class有new/instance_methods/methods/superclass/class/ancestors方法 “Classes and regular objects live together&amp;#8221; 类和普通对象快乐的生活在一起。&lt;/p&gt;
+
+&lt;h2 id='class_and_module'&gt;class and module:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Usually, you pick a module when you mean it to be included somewhere (or maybe to be used as a Namespace (41)).&lt;/li&gt;
+
+&lt;li&gt;you pick a class when you mean it to be instantiated or inherited. 虽然可以交换使用，但是还是要明确职能。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='constants'&gt;constants:&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;all the constants in a program are arranged in a tree similar to a file system, where modules (and classes) are directories and regular constants are files.&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='objects_and_classes_wrapup'&gt;Objects and Classes Wrap-Up&lt;/h2&gt;
+
+&lt;h3 id='whats_an_object'&gt;What’s an object?&lt;/h3&gt;
+
+&lt;p&gt;It’s just a bunch of instance variables, plus a link to a class. The object’s methods don’t live in the object—they live in the object’s class, where they’re called the instance methods of the class.&lt;/p&gt;
+
+&lt;h3 id='whats_a_class'&gt;What’s a class?&lt;/h3&gt;
+
+&lt;p&gt;It’s just an object (an instance of Class), plus a list of instance methods and a link to a superclass. Class is a subclass of Module, so a class is also a module.&lt;/p&gt;
+
+&lt;p&gt;Like any object, a class has its own methods, such as new( ). These are instance methods of the Class class. Also like any object, classes must be accessed through references. You already have a constant reference to each class: the class’s name.&lt;/p&gt;
+
+&lt;h2 id='class_definition'&gt;class definition&lt;/h2&gt;
+
+&lt;p&gt;a Ruby class definition is actually regular code that runs.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Keep in mind that a class is just a souped-up module.&lt;/li&gt;
+
+&lt;li&gt;The role of the current class is taken by the class of self.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As soon as you enter a new scope, the previous bindings are simply replaced by a new set of bindings. 定义一个类的时候，self指向当前类,bindings被当前类的bindings替代.&lt;/p&gt;
+
+&lt;h2 id='class_macros'&gt;Class Macros&lt;/h2&gt;
+
+&lt;p&gt;(methods that modify classes) 修改类的一些方法 All the attr_&lt;em&gt;( ) methods are defined on class Module, so you can use them whenever self is a module or a class. A method such as attr_accessor( ) is called a Class Macro.&lt;/em&gt;remember that an attribute is actually a pair of methods&lt;/p&gt;
+
+&lt;h3 id='around_aliases__monkey_patch'&gt;Around Aliases &amp;lt; Monkey Patch&lt;/h3&gt;
+
+&lt;p&gt;(methods that wrap additional code around other methods). You can write an Around Alias in three simple steps:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;You alias a method.&lt;/li&gt;
+
+&lt;li&gt;You redefine it.&lt;/li&gt;
+
+&lt;li&gt;You call the old method from the new method.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;As usual, the more powerful the tricks you pull, the more testing of code you need to do!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code&gt;
+def self.deprecate(old_method, new_method)
+    define_method(old_method) do |*args, &amp;amp;block|
+        warn &amp;quot;Warning: #{old_method}() is deprecated. Use #{new_method}().&amp;quot;
+        send(new_method, *args, &amp;amp;block)
+    end
+end
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id='singleton_method'&gt;Singleton Method&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A method specific to a single object, is called a Singleton Method.&lt;/li&gt;
+
+&lt;li&gt;living in the EigenClass of the object.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='eigenclasses'&gt;Eigenclasses&lt;/h3&gt;
+
+&lt;p&gt;(also known as singleton classes) an object can have its own special, hidden class. That’s called the eigen-class of the object.&lt;/p&gt;
+
+&lt;p&gt;eigenclasses have only a single instance (that’s why they’re also called singleton classes).and they can’t be inherited. More important, an eigenclass is where an object’s Singleton Methods live&lt;/p&gt;
+
+&lt;h3 id='class_methods'&gt;class methods:&lt;/h3&gt;
+
+&lt;p&gt;they’re Singleton Methods of a class.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Class methods are a special kind of Singleton Method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;class methods are just Singleton Methods that live in the class’s eigenclass, you can just open the eigenclass and define the method in there:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+class MyClass
+  class &amp;lt;&amp;lt; self
+    def my_method; end
+  end
+end
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;eigenclass helper:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+class Object
+  def eigenclass
+    class &amp;lt;&amp;lt; self;self;end
+  end
+end
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;eigenclass and inheritance: “The superclass of the eigenclass is the eigenclass of the superclass.&amp;#8221;&lt;/p&gt;
+
+&lt;h3 id='the_current_class'&gt;The Current Class:&lt;/h3&gt;
+
+&lt;p&gt;Whenever you open a class with the class keyword(or a module with the module keyword),that class becomes the current class. (the default home of the methods you define).&lt;/p&gt;
+
+&lt;p&gt;• In a class definition, the current object self is the class being defined. • The Ruby interpreter always keeps a reference to the current class (or module). All methods defined with def become instance methods of the current class. • In a class definition, the current class is the same as self—the class being defined. • If you have a reference to the class, you can open the class with class_eval（） (or module_eval( )).&lt;/p&gt;
+
+&lt;h3 id='class_eval'&gt;class_eval:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Module#class_eval( )
+(also known by its alternate name, module_eval( ))
+evaluates a block in the context of an existing class&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id='class_eval_'&gt;class_eval( )&lt;/h5&gt;
+
+&lt;p&gt;changes both self and the current class. By changing the current class, class_eval( ) effectively reopens the class, just like the class keyword does.&lt;/p&gt;
+
+&lt;h5 id='instance_eval_'&gt;instance_eval( )&lt;/h5&gt;
+
+&lt;p&gt;only changes self. in fact,instance_eval( ) also changes the current class: it changes it to the eigenclass of the receiver.&lt;/p&gt;
+
+&lt;h2 id='method_call'&gt;Method call:&lt;/h2&gt;
+
+&lt;p&gt;When you call a method, Ruby does two things:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It finds the method. This is a process called &lt;code&gt;method lookup&lt;/code&gt;.&lt;/li&gt;
+
+&lt;li&gt;It executes the method. To do that, Ruby needs something called &lt;code&gt;self&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id='method_lookup'&gt;method lookup:&lt;/h3&gt;
+
+&lt;p&gt;When you call a method, Ruby looks into the object’s class and finds the method there.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ancestors chain: The path of classes you just traversed is the ancestors chain of the class. (The ancestors chain also includes modules)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;To find a method, Ruby goes in the receiver’s class, and from there it climbs the ancestors chain until it finds the method.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='module_lookup'&gt;module lookup:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;When you include a module in a class (or even in another module), Ruby creates an &lt;code&gt;anonymous class&lt;/code&gt; that wraps the module and inserts the anonymous class in the chain, just above the including class itself&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;wrapper classes are called &lt;code&gt;include classes&lt;/code&gt; (or sometimes proxy classes).&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;class Object includes Kernel, so Kernel gets into every object’s ancestors chain.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;if you add a method to Kernel, this Kernel Method will be available to all objects.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='discovering_self'&gt;Discovering self&lt;/h3&gt;
+
+&lt;p&gt;Every line of Ruby code is executed inside an object—the so–called current object. The current object is also known as self, because you can access it with the self keyword.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;When you call a method, Ruby looks up the method by following the &lt;code&gt;one step to the right, then up&lt;/code&gt; rule and then executes the method with the receiver as self.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='private_method'&gt;private method&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;every time you call a private method, it must be on the implicit receiver—self.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='private_rule'&gt;private rule&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;you need an explicit receiver to call a method on an object that is not yourself&lt;/li&gt;
+
+&lt;li&gt;private methods can be called only with an implicit receiver. SO you can only call a private method on yourself.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='methods'&gt;Methods:&lt;/h2&gt;
+
+&lt;p&gt;using either Dynamic Methods or a special method called method_missing()&lt;/p&gt;
+
+&lt;h3 id='calling_methods_dynamically'&gt;Calling Methods Dynamically:&lt;/h3&gt;
+
+&lt;p&gt;my mentors told me that when you call a method, you’re actually sending a message to an object.&lt;/p&gt;
+
+&lt;h3 id='dynamic_dispatch'&gt;Dynamic Dispatch:&lt;/h3&gt;
+
+&lt;p&gt;With send( ), the name of the method that you want to call becomes just a regular argument. You can wait literally until the very last moment to decide which method to call, while the code is running. This technique is called Dynamic Dispatch Pattern Dispatch: it filters methods based on a pattern in their names&lt;/p&gt;
+
+&lt;h3 id='defining_methods_dynamically'&gt;Defining Methods Dynamically:&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;Module#define_method( ).
+There is also an Object#define_method( ) that defines a Singleton Method &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='dynamic_method'&gt;Dynamic Method:&lt;/h3&gt;
+
+&lt;p&gt;This technique of defining a method at runtime is called a Dynamic Method&lt;/p&gt;
+
+&lt;h3 id='ghost_method'&gt;Ghost Method:&lt;/h3&gt;
+
+&lt;p&gt;A message that’s processed by method_missing( ) looks like a regular call from the caller’s side but has no corresponding method on the receiver’s side. This is named a Ghost Method. Ghost Methods like rows_with_country( ) are just syntactic sugar; they can’t do anything that a regular method couldn’t. * don’t introduce more Ghost Methods than necessary&lt;/p&gt;
+
+&lt;h3 id='dynamic_proxies'&gt;Dynamic Proxies:&lt;/h3&gt;
+
+&lt;p&gt;An object that catches Ghost Methods and forwards them to another ob- ject, maybe wrapping some logic around the call, is called a Dynamic Proxy.&lt;/p&gt;
+
+&lt;h3 id='blank_slate'&gt;Blank Slate:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Classes that inherit directly from BasicObject are automatically Blank Slates.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;remove most inherited methods from your proxies right away. The result is called a Blank Slate, a class that has fewer methods than the Object class itself &lt;code&gt;
+undef_method() / remove_method()
+instance_methods.each do |m|
+  undef_method m unless m.to_s =~ /^__|method_missing|respond_to?/
+end
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id='blocks'&gt;blocks:&lt;/h1&gt;
+
+&lt;p&gt;blocks are a powerful tool for controlling scope, meaning which variables and methods can be seen by which lines of code.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Code that runs is actually made up of two things: the code itself and a set of bindings. When code runs, it needs an environment: local variables, instance variables, self&amp;#8230; .&lt;/li&gt;
+
+&lt;li&gt;Since these entities are basically names bound to objects, you can call them the bindings for short.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id='scope'&gt;Scope:&lt;/h1&gt;
+
+&lt;h3 id='bindings_and_scope'&gt;bindings and scope&lt;/h3&gt;
+
+&lt;p&gt;when you create the block, you capture the local bindings. A block captures the bindings that are around when you first define the block. You can also define additional bindings inside the block, but they disappear after the block ends.&lt;/p&gt;
+
+&lt;p&gt;The first time the program enters my_method( ), it opens a new scope and defines a local variable. Then the program exits the method, falling back to the top-level scope.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;“Whenever the program changes scope, some bindings are replaced by a new set of bindings.”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Granted, this doesn’t happen to all the bindings each and every time. For example, if a method calls another method on the same object, instance variables stay in scope through the call. In general, though,bindings tend to fall out of scope when the scope changes. In particular, local variables change at every new scope. (That’s why they’re “local”!)&amp;#8221;&lt;/p&gt;
+
+&lt;h3 id='scope_gates'&gt;scope gates:&lt;/h3&gt;
+
+&lt;p&gt;There are exactly three places where a program leaves the previous scope behind and opens a new one:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Class definitions&lt;/li&gt;
+
+&lt;li&gt;Module definitions&lt;/li&gt;
+
+&lt;li&gt;Methods&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Being less universally accessible, top-level instance variables are generally considered safer than global variables&lt;/p&gt;
+
+&lt;p&gt;The code in a class or module definition is executed immediately. Conversely, the code in a method definition is executed later, when you eventually call the method.&lt;/p&gt;
+
+&lt;p&gt;不能从内看到外面的本地变量&lt;/p&gt;
+
+&lt;h3 id='flat_scope'&gt;flat scope:&lt;/h3&gt;
+
+&lt;p&gt;If you replace Scope Gates with methods, you allow one scope to see variables from another scope. Technically, this trick should be called &lt;code&gt;nested lexical scopes&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Class.new( ) is a perfect replacement for class. You can also define instance methods in the class if you pass a block to &lt;code&gt;Class.new( )&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Instead of def, you can use &lt;code&gt;Module#define_method( )&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id='shared_scope'&gt;shared scope:&lt;/h3&gt;
+
+&lt;p&gt;No other method can see shared, because it’s protected by a Scope Gate That’s what the define_methods( ) method is for. This smart way to control the sharing of variables is called a &lt;code&gt;Shared Scope&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id='context_probe'&gt;context probe:&lt;/h3&gt;
+
+&lt;p&gt;you can call the block that you pass to instance_eval( ) a Context Probe, because it’s like a snippet of code that you dip inside an object to do something in there,but it also allows you to pass arguments to the block&lt;/p&gt;
+
+&lt;h3 id='clean_room'&gt;clean room:&lt;/h3&gt;
+
+&lt;p&gt;Sometimes you create an object just to evaluate blocks inside it. An object like that can be called a Clean Room:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;
+env = Object.new
+env.instance_eval &amp;amp;block
+env.instance_eval &amp;amp;event
+&lt;/code&gt; The instance variables in the setups and events are actually instance variables of the Object. This is the trick that allows setups to define variables for events&lt;/p&gt;
+
+&lt;h3 id='callable_objects'&gt;Callable Objects:&lt;/h3&gt;
+
+&lt;h4 id='deferred_evaluation'&gt;Deferred Evaluation:&lt;/h4&gt;
+
+&lt;p&gt;you can create a Proc by passing the block to Proc.new. Later, you can evaluate the block-turned-object with Proc#call( )&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;you can use the &amp;amp;operator to convert the Proc to a block&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id='proc_and_lambda'&gt;proc and lambda:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In a lambda, return just returns from the lambda.&lt;/li&gt;
+
+&lt;li&gt;In a proc, return behaves differently. Rather than return from the proc, it returns from the scope where the proc itself was defined&lt;/li&gt;
+
+&lt;li&gt;Call a lambda with the wrong arity, and it fails with an ArgumentError. On the other hand, a proc fits the argument list to its own expectations p = -&amp;gt;(x) { x + 1 }(haskell way)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id='method'&gt;method:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;By calling Object#method( ), you get the method itself as a Method object, which you can later execute with Method#call( ).&lt;/li&gt;
+
+&lt;li&gt;You can detach a method from its object with Method#unbind( ), which returns an UnboundMethod object.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id='summary'&gt;Summary&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;An object is composed of a bunch of instance variables and a link to a class.&lt;/li&gt;
+
+&lt;li&gt;The methods of an object live in the object’s class (from the point of view of the class, they’re called instance methods).&lt;/li&gt;
+
+&lt;li&gt;The class itself is just an object of class Class. The name of the class is just a constant.&lt;/li&gt;
+
+&lt;li&gt;Class is a subclass of Module. A module is basically a package of methods. In addition to that, a class can also be instantiated (with new( )) or arranged in a hierarchy (through its superclass( )).&lt;/li&gt;
+
+&lt;li&gt;Constants are arranged in a tree similar to a file system, where the names of modules and classes play the part of directories and regular constants play the part of files.&lt;/li&gt;
+
+&lt;li&gt;Each class has an ancestors chain, beginning with the class itself and going up to BasicObject.&lt;/li&gt;
+
+&lt;li&gt;When you call a method, Ruby goes right into the class of the receiver and then up the ancestors chain, until it either finds the method or reaches the end of the chain.&lt;/li&gt;
+
+&lt;li&gt;Every time a class includes a module, the module is inserted in the ancestors chain right above the class itself.&lt;/li&gt;
+
+&lt;li&gt;When you call a method, the receiver takes the role of self.&lt;/li&gt;
+
+&lt;li&gt;When you’re defining a module (or a class), the module takes the role of self.&lt;/li&gt;
+
+&lt;li&gt;Instance variables are always assumed to be instance variables of self.&lt;/li&gt;
+
+&lt;li&gt;Any method called without an explicit receiver is assumed to be a method of self.&lt;/li&gt;
+
+&lt;li&gt;There are classes, eigenclasses, and modules. There are instance methods, class methods, and Singleton Methods.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='seven_rules_of_the_ruby_object_model'&gt;Seven rules of the Ruby object model:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;There is only one kind of object—be it a regular object or a module.&lt;/li&gt;
+
+&lt;li&gt;There is only one kind of module—be it a regular module, a class, an eigenclass, or a proxy class.&lt;/li&gt;
+
+&lt;li&gt;There is only one kind of method, and it lives in a module—most often in a class.&lt;/li&gt;
+
+&lt;li&gt;Every object, classes included, has its own “real class,” be it a regular class or an eigenclass.&lt;/li&gt;
+
+&lt;li&gt;Every class has exactly one superclass, with the exception of Basi- cObject (or Object if you’re using Ruby 1.8), which has none. This means you have a single ancestors chain from any class up to BasicObject.&lt;/li&gt;
+
+&lt;li&gt;The superclass of the eigenclass of an object is the object’s class. The superclass of the eigenclass of a class is the eigenclass of the class’s superclass. (Try repeating that three times, fast! Then look back at Figure 4.5, on the preceding page, and it will all make sense.)&lt;/li&gt;
+
+&lt;li&gt;When you call a method, Ruby goes “right” in the receiver’s real class and then “up” the ancestors chain. That’s all there is to know about the way Ruby finds methods.&lt;/li&gt;
+&lt;/ol&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>MVC in Javascript</title>
+   <link href="http://krazylee.github.com/2012/02/10/mvc-in-javascript"/>
+   <updated>2012-02-10T00:00:00+08:00</updated>
+   <id>hhttp://krazylee.github.com/2012/02/10/mvc-in-javascript</id>
+   <content type="html">&lt;h2 id='background'&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;一个Javascript web application的业务逻辑大致分这么几个部分：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;从remote server上获取数据&lt;/li&gt;
+
+&lt;li&gt;事件和页面DOM的绑定&lt;/li&gt;
+
+&lt;li&gt;从页面元素变化的自动渲染render&lt;/li&gt;
+
+&lt;li&gt;routes路由变化的监控&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;当数据模型较少且单一的情况下，客户端的代码可以比较轻松的解决这几个目的。 而当数据模型较多,且页面结构复杂的时候，客户端代码则需要遵循一定的表现层模式(&lt;a href='http://www.infoq.com/cn/articles/rationalizing-presentation-tier'&gt;presentation patterns&lt;/a&gt;). 其目的就是各部分代码逻辑的解藕，表现形式就是类似models,controllers,views,routes的目录结构的划分.&lt;/p&gt;
+
+&lt;h2 id='concepts'&gt;Concepts&lt;/h2&gt;
+
+&lt;p&gt;更准确的说应该是MVVM(Model-View-ViewModel)才对。 因为严格说来并没有controller的存在，反倒更多的是routes的设置。 这也是为什么backbone在后来的版本中把Controller的名字改成了Route的原因。&lt;/p&gt;
+
+&lt;h3 id='to_be_continued'&gt;to be continued&amp;#8230;&lt;/h3&gt;</content>
+ </entry>
+ 
+ 
+</feed>

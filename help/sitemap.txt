@@ -1,0 +1,10 @@
+
+http://krazylee.github.com/works.html
+http://krazylee.github.com/atom.xml
+http://krazylee.github.com/sitemap.txt
+http://krazylee.github.com/notes.html
+http://krazylee.github.com/about.html
+http://krazylee.github.com/index.html
+
+http://krazylee.github.com/2012/04/27/metaprogramming-ruby
+http://krazylee.github.com/2012/02/10/mvc-in-javascript

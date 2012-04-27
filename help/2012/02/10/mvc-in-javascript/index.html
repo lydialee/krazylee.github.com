@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MVC in Javascript</title>
+    
+    <meta name="author" content="Krazy Lee">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel='stylesheet' type='text/css' href='/assets/themes/code/css/style.css'>
+    <link rel='stylesheet' type='text/css' href='/assets/themes/code/css/pygments_trac.css'>
+  </head>
+<body>
+    <header>
+          <h1>
+            <a href="/">flash[:notice]</a>
+          </h1>
+          <p id="elsewhere">
+            
+            
+            
+
+
+  
+    
+    	
+    	— <a href="/works.html">Works</a>— 
+    	
+    
+  
+    
+  
+    
+  
+    
+    	
+    	— <a href="/notes.html">Notes</a>— 
+    	
+    
+  
+    
+    	
+    	— <a href="/about.html">About</a>— 
+    	
+    
+  
+    
+  
+
+
+
+
+          </p>
+    </header>
+    <div class="container">
+      <div class="content">
+        
+
+<article class="hentry">
+
+<h1>
+    <a href="" rel="bookmark" title="Permanent Link to MVC in Javascript">MVC in Javascript</a>
+    <small class="updated" title="">
+        10 February 2012
+    </small>
+</h1>
+
+    
+  <h2 id='background'>Background</h2>
+
+<p>一个Javascript web application的业务逻辑大致分这么几个部分：</p>
+
+<ul>
+<li>从remote server上获取数据</li>
+
+<li>事件和页面DOM的绑定</li>
+
+<li>从页面元素变化的自动渲染render</li>
+
+<li>routes路由变化的监控</li>
+</ul>
+
+<p>当数据模型较少且单一的情况下，客户端的代码可以比较轻松的解决这几个目的。 而当数据模型较多,且页面结构复杂的时候，客户端代码则需要遵循一定的表现层模式(<a href='http://www.infoq.com/cn/articles/rationalizing-presentation-tier'>presentation patterns</a>). 其目的就是各部分代码逻辑的解藕，表现形式就是类似models,controllers,views,routes的目录结构的划分.</p>
+
+<h2 id='concepts'>Concepts</h2>
+
+<p>更准确的说应该是MVVM(Model-View-ViewModel)才对。 因为严格说来并没有controller的存在，反倒更多的是routes的设置。 这也是为什么backbone在后来的版本中把Controller的名字改成了Route的原因。</p>
+
+<h3 id='to_be_continued'>to be continued&#8230;</h3>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev disabled"><a>&larr; Previous</a></li>
+      
+      
+        <li class="next"><a href="/2012/04/27/metaprogramming-ruby" title="Metaprogramming ruby">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'krazylee'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+
+  </div>
+  
+</article>
+  
+
+
+
+
+
+      </div>
+      <footer>
+        <span class="author vcard">
+            Written by <a class="url fn" href="/">Krazy Lee</a>
+            <a class="email" href="mailto:lixiangstar@gmail.com"></a>.
+        </span>
+        Powered by
+        <a href="https://github.com/mojombo/jekyll">Jekyll</a>.
+        <a href="https://github.com/Krazylee/krazylee.github.com">Source code</a>.
+      </footer>
+    </div> 
+    
+
+  </body>
+</html>
+
