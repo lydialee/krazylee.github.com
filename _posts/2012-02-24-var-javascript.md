@@ -5,6 +5,8 @@ category:
 tags: []
 ---
 {% include JB/setup %}
+一次团队内部的分享，本意是js入门, 结果....
+同步的[slides](http://krazylife.net/slides/javascript/)
 ##Background
 Javascript由网景和Sun两家公司一起携手推向市场.
 必须"看上去与Java足够相似".
