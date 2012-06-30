@@ -6,63 +6,58 @@ tags: []
 ---
 {% include JB/setup %}
 
-
-
-
 Object model
 =====
 
-
-
 ###class and objects
+
 Instance variables live in objects, and methods live in
 classes.
+
 实例变量在对象中，而方法共享在类里。
 String.instance_methods == "abc".methods  # => true
 String.methods == "abc".methods  # => false
 
-
 classes are nothing but objects, class names are nothing but constants.
+
 类也是对象，类名则是一些常数值。
 
 Class有new/instance_methods/methods/superclass/class/ancestors方法
-“Classes and regular objects live together"
-类和普通对象快乐的生活在一起。
+
+"Classes and regular objects live together"
 
 
 
-class and module:
----------
+###class and module
 1. Usually, you pick a module when you mean it to be included somewhere (or maybe to be used as a Namespace (41)).
 2. you pick a class when you mean it to be instantiated or inherited. 
 虽然可以交换使用，但是还是要明确职能。
 
-constants:
------------
-    all the constants in a program are arranged in a tree similar to a file system, 
-    where modules (and classes) are directories and regular constants are files.
+###constants
+all the constants in a program are arranged in a tree similar to a file system, 
+where modules (and classes) are directories and regular constants are files.
 
-
-
-
-class definition
------------------
+###class definition
 a Ruby class definition is actually regular code that runs.
 
 * Keep in mind that a class is just a souped-up module.
 * The role of the current class is taken by the class of self.
 
 As soon as you enter a new scope, the previous bindings are simply replaced by a new set of bindings. 
+
 定义一个类的时候，self指向当前类,bindings被当前类的bindings替代.
 
+
+
 Class Macros
---------------------
+==========
 (methods that modify classes) 
 修改类的一些方法
 All the attr_*( ) methods are defined on class Module, so you can use them
 whenever self is a module or a class. A method such as attr_accessor( ) is
 called a Class Macro.
-*remember that an attribute is actually a pair of methods
+
+remember that an attribute is actually a pair of methods
 
 ###Monkey See, Monkey Patch
 if you casually add bits and pieces of functionality to classes, you can end up with bugs like the one you just encountered. Some people would frown upon this kind of reckless patching of classes, and they would refer to the previous code
@@ -77,19 +72,17 @@ You can write an Around Alias in three simple steps:
 
 > As usual, the more powerful the tricks you pull, the more testing of code you need to do!
 
-{{ highlight ruby}}
-```
+{% highlight ruby %}
 def self.deprecate(old_method, new_method)
     define_method(old_method) do |*args, &block|
         warn "Warning: #{old_method}() is deprecated. Use #{new_method}()."
         send(new_method, *args, &block)
     end
 end
-```
-{{ endhighlight ruby}}
+{% endhighlight ruby %}
+
 
 ###Singleton Method
-
 * A method specific to a single object, is called a Singleton Method.
 * living in the EigenClass of the object.
 
@@ -113,39 +106,37 @@ class methods are just Singleton Methods that live in the class’s
 eigenclass, you can just open the eigenclass and define the
 method in there:
 
-```
+{% highlight ruby %}
 class MyClass
   class << self
     def my_method; end
   end
 end
-```
+{% endhighlight ruby %}
 
 eigenclass helper:
-
-```
+{% highlight ruby %}
 class Object
   def eigenclass
     class << self;self;end
   end
 end
-```
+{% endhighlight ruby %}
 
 eigenclass and inheritance:
-“The superclass of the eigenclass is the eigenclass of the superclass."
+The superclass of the eigenclass is the eigenclass of the superclass.
 
 ###The Current Class:
 Whenever you open a class with the class keyword(or a module with the module keyword),that class becomes the current class.
 (the default home of the methods you define).
 
-
-• In a class definition, the current object self is the class being
+* In a class definition, the current object self is the class being
 defined.
-• The Ruby interpreter always keeps a reference to the current class
+* The Ruby interpreter always keeps a reference to the current class
 (or module). All methods defined with def become instance methods of the current class.
-• In a class definition, the current class is the same as self—the class
+* In a class definition, the current class is the same as self—the class
 being defined.
-• If you have a reference to the class, you can open the class with
+* If you have a reference to the class, you can open the class with
 class_eval（） (or module_eval( )).
 
 
@@ -163,8 +154,8 @@ only changes self.
 in fact,instance_eval( ) also changes the current class: 
 it changes it to the eigenclass of the receiver.
 
-Method call:
-----------
+Method call
+=========
 When you call a method, Ruby does two things:
 
 1. It finds the method. This is a process called `method lookup`.
@@ -254,13 +245,12 @@ Proxy.
 remove most inherited methods from your proxies right away.
 The result is called a Blank Slate, a class that has fewer methods than
 the Object class itself
-```
+{% highlight ruby %}
 undef_method() / remove_method()
 instance_methods.each do |m|
   undef_method m unless m.to_s =~ /^__|method_missing|respond_to?/
 end
-```
-
+{% endhighlight ruby %}
 
 
 blocks:

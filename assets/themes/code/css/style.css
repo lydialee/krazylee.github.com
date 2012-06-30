@@ -140,7 +140,6 @@ pre,
 code {
   font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
                Consolas, Monaco, 'Lucida Console', monospaced;
-  font-size: .75em;
 }
 
 
@@ -473,4 +472,9 @@ article {
 	0% {opacity: 0;}
 	60% {opacity: 0;}
 	100% {opacity: 100;}
+}
+
+.highlight{
+  background:#000;
+  padding:6px;
 }
