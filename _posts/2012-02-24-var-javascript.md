@@ -71,8 +71,7 @@ a few primitive types,everything else is an object
 - Boolean
 - Undefined and null
 
-example:a calulator
-##Function(first-class object):
+##Function(first-class object)
 functions:
 objects,invokable
 call apply

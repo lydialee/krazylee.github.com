@@ -14,8 +14,8 @@ Object model
 Instance variables live in objects, and methods live in
 classes.
 
-实例变量在对象中，而方法共享在类里。
 String.instance_methods == "abc".methods  # => true
+
 String.methods == "abc".methods  # => false
 
 classes are nothing but objects, class names are nothing but constants.
@@ -24,14 +24,13 @@ classes are nothing but objects, class names are nothing but constants.
 
 Class有new/instance_methods/methods/superclass/class/ancestors方法
 
-"Classes and regular objects live together"
+Classes and regular objects live together
 
 
 
 ###class and module
 1. Usually, you pick a module when you mean it to be included somewhere (or maybe to be used as a Namespace (41)).
 2. you pick a class when you mean it to be instantiated or inherited. 
-虽然可以交换使用，但是还是要明确职能。
 
 ###constants
 all the constants in a program are arranged in a tree similar to a file system, 
@@ -48,11 +47,9 @@ As soon as you enter a new scope, the previous bindings are simply replaced by a
 定义一个类的时候，self指向当前类,bindings被当前类的bindings替代.
 
 
-
 Class Macros
 ==========
-(methods that modify classes) 
-修改类的一些方法
+    methods that modify classes
 All the attr_*( ) methods are defined on class Module, so you can use them
 whenever self is a module or a class. A method such as attr_accessor( ) is
 called a Class Macro.
