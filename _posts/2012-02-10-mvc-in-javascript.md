@@ -4,6 +4,7 @@ title: "MVC in Javascript"
 category: 
 tags: []
 ---
+
 {% include JB/setup %}
 
 ##Background
@@ -24,6 +25,4 @@ tags: []
 因为严格说来并没有controller的存在，反倒更多的是routes的设置。
 这也是为什么backbone在后来的版本中把Controller的名字改成了Route的原因。
 
-###to be continued...
-
-
+###never to be continued...
